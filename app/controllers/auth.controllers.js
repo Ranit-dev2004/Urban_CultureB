@@ -6,25 +6,23 @@ const bcrypt = require("bcrypt");
 
 exports.signup = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, FirstName, LastName } = req.body;
     const existingUser = await User.findOne({ email });
-
     if (existingUser) {
       return res.status(400).send({ message: "User already exists." });
     }
-
     const hashedPassword = bcrypt.hashSync(password, 8);
-
     const user = new User({
+      FirstName,
+      LastName,
       email,
       password: hashedPassword,
     });
-
     await user.save();
-    res.status(200).send({ message: "User signed up successfully" });
-
-  } catch (err) {
-    res.status(500).send({ message: err.message || "An error occurred during signup." });
+    res.status(201).send({ message: "User registered successfully!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Something went wrong during registration." });
   }
 };
 
@@ -60,4 +58,26 @@ exports.signin = async (req, res) => {
   } catch (err) {
     res.status(500).send({ message: err.message || "An error occurred during signin." });
   }
+};
+
+exports.getusers =async(req,res)=>{
+  const userId = req.userId; 
+  try{
+    const user = await User.findById(userId);
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+  res.status(200).json({
+    success: true,
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt,
+    },
+  });
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ message: 'Server error' });
+};
 };

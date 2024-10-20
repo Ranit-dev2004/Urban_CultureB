@@ -12,6 +12,8 @@ module.exports = function(app) {
     app.post("/api/products/Addproduct", controller.Addproduct);
     app.put("/api/productsU/:id", controller.UpdateProduct);
     app.delete("/api/products/:id", controller.DeleteProduct);
-    app.get("/api/products/:id", controller.FindProduct); 
-    app.get("/api/findProductByField", controller.findProductByField); 
+    app.get('/product/:id',controller.FindProductById);
+    app.get("/api/products/Find", controller.FindProduct); 
+    app.get("/api/findProductByField", controller.findProductByField);
+    app.get("/api/Product/best-selling",controller.getBestSellingItems)
 };

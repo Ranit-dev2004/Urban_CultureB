@@ -42,6 +42,8 @@ app.get("/", (req, res) => {
 });
 require("./routes/auth.routes")(app);
 require("./routes/product.routes")(app);
+require("./routes/cart.routes")(app);
+require("./routes/shipping.routes")(app);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
