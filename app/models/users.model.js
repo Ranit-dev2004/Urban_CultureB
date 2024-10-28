@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Define the Address schema
 const addressSchema = new mongoose.Schema({
     name: { type: String, required: true },
     phone: { type: Number, required: true },
@@ -11,7 +10,6 @@ const addressSchema = new mongoose.Schema({
     state: { type: String, required: true },
 });
 
-// Define the User schema with addresses array
 const User = mongoose.model(
     "User",
     new mongoose.Schema({
@@ -19,8 +17,7 @@ const User = mongoose.model(
         LastName: { type: String, required: true },
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true },
-        addresses: [addressSchema], // Array of address objects
+        addresses: [addressSchema], 
     })
 );
-
 module.exports = User;
