@@ -116,34 +116,33 @@ try {
 
 exports.findProductByField = async (req, res) => {
     try {
-        const { name, description, price, category, brand, image } = req.query;
+        const { name, description, category, brand } = req.query;
         const query = {};
-        
         if (name) query.name = { $regex: name, $options: 'i' };
         if (description) query.description = { $regex: description, $options: 'i' };
         if (category) query.category = { $regex: category, $options: 'i' };
         if (brand) query.brand = { $regex: brand, $options: 'i' };
-        
-        const product = await Product.findOne(query);
+        const products = await Product.find(query);
 
-        if (!product) {
+        if (products.length === 0) {
             return res.status(404).json({
-                message: "Product not found"
+                message: "No products found"
             });
         }
 
         res.status(200).json({
-            message: "Product found",
-            product: product
+            message: "Products found",
+            products: products 
         });
     } catch (err) {
-        console.log("Error while finding product by field:", err);
+        console.log("Error while finding products by field:", err);
         res.status(500).json({
-            message: "Failed to find product",
+            message: "Failed to find products",
             error: err.message
         });
     }
 };
+
 
 exports.getBestSellingItems = async (req,res)=>{
     try{

@@ -71,7 +71,7 @@ exports.getusers =async(req,res)=>{
     success: true,
     user: {
       id: user._id,
-      name: user.name,
+      name: user.FirstName,
       email: user.email,
       createdAt: user.createdAt,
     },
